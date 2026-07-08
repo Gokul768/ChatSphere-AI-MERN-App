@@ -8,3 +8,7 @@ const corsOptions = {
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
+
+const CHATTU_TOKEN = "chattu-token";
+
+export { corsOptions, CHATTU_TOKEN };
