@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from "react";
-
+import { geminiServer } from "../constants/config";
 import axios from "axios";
 
 import {
@@ -270,48 +270,42 @@ const AIChat = () => {
     setLoading(true);
 
     try {
-      const { data } = await axios.post(
-        "http://localhost:5001/chat",
-        {
-          message: currentMessage,
-        }
-      );
-
-      const aiMessage = {
-        id: Date.now() + 1,
-
-        sender: "ai",
-
-        text: data.reply,
-
-        time: new Date().toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-      };
-
-      setMessages((prev) => [...prev, aiMessage]);
-    } catch (error) {
-      console.log(error);
-
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: Date.now() + 2,
-
-          sender: "ai",
-
-          text: "❌ Unable to connect to Gemini.",
-
-          time: new Date().toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          }),
-        },
-      ]);
-    } finally {
-      setLoading(false);
+  const { data } = await axios.post(
+    `${geminiServer}/chat`,
+    {
+      message: currentMessage,
     }
+  );
+
+  const aiMessage = {
+    id: Date.now() + 1,
+    sender: "ai",
+    text: data.reply,
+    time: new Date().toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    }),
+  };
+
+  setMessages((prev) => [...prev, aiMessage]);
+} catch (error) {
+  console.error(error);
+
+  setMessages((prev) => [
+    ...prev,
+    {
+      id: Date.now() + 2,
+      sender: "ai",
+      text: "❌ Unable to connect to Gemini.",
+      time: new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+    },
+  ]);
+} finally {
+  setLoading(false);
+}
   }, [message, loading]);
 
   /* ==========================================================
