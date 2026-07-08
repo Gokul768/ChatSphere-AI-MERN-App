@@ -6,6 +6,7 @@ import { CHATTU_TOKEN } from "../constants/config.js";
 import { User } from "../models/user.js";
 
 const isAuthenticated = TryCatch((req, res, next) => {
+  console.log("AUTH MIDDLEWARE:", req.method, req.originalUrl);
   const token = req.cookies[CHATTU_TOKEN];
   if (!token)
     return next(new ErrorHandler("Please login to access this route", 401));
