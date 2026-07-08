@@ -141,21 +141,49 @@ const Groups = () => {
         </IconButton>
       </Box>
 
-      <Tooltip title="Back">
-        <IconButton
-          onClick={navigateBack}
-          sx={{
-            position: "absolute",
-            top: "2rem",
-            left: "2rem",
-            bgcolor: "#1E293B",
-            color: "white",
-            "&:hover": { bgcolor: "#6366F1" },
-          }}
-        >
-          <KeyboardBackspaceIcon />
-        </IconButton>
-      </Tooltip>
+      <Stack
+  direction="row"
+  alignItems="center"
+  spacing={2}
+  sx={{
+    width: "100%",
+    mb: 3,
+  }}
+>
+  <Tooltip title="Back">
+    <IconButton
+      onClick={navigateBack}
+      sx={{
+        bgcolor: "#1E293B",
+        color: "white",
+        width: {
+          xs: 40,
+          sm: 44,
+          md: 48,
+        },
+        height: {
+          xs: 40,
+          sm: 44,
+          md: 48,
+        },
+        flexShrink: 0,
+        "&:hover": {
+          bgcolor: "#6366F1",
+        },
+      }}
+    >
+      <KeyboardBackspaceIcon />
+    </IconButton>
+  </Tooltip>
+
+  <Typography
+    variant="h5"
+    fontWeight={700}
+    color="white"
+  >
+    Manage Group
+  </Typography>
+</Stack>
     </>
   );
 

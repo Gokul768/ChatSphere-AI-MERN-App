@@ -26,6 +26,7 @@ import {
   Send as SendIcon,
   Mic as MicIcon,
   AccountCircle,
+  ArrowBack,
 } from "@mui/icons-material";
 
 import { InputBox } from "../components/styles/StyledComponents";
@@ -92,6 +93,9 @@ const Chat = ({
   const socket = getSocket();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const handleMobileBack = () => {
+  navigate("/");
+};
   const theme = useTheme();
 
   // Responsive breakpoint helpers — purely presentational, no logic change.
@@ -375,7 +379,11 @@ const Chat = ({
     [oldMessages, messages]
   );
 
-  if (chatDetails.isError) navigate("/");
+  useEffect(()=>{
+ if(chatDetails.isError){
+   navigate("/");
+ }
+},[chatDetails.isError]);
 
   /* ================= RESPONSIVE LOADING SKELETON ================= */
   if (chatDetails.isLoading)
@@ -423,20 +431,58 @@ const Chat = ({
           zIndex: 2,
         }}
       >
-        <Typography
-          noWrap
-          sx={{
-            fontWeight: 700,
-            fontSize: { xs: "1rem", sm: "1.1rem", md: "1.2rem", lg: "1.25rem" },
-            color: "white",
-            minWidth: 0,
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            pr: 1,
-          }}
-        >
-          {chatDetails?.data?.chat?.name}
-        </Typography>
+        <Stack
+  direction="row"
+  spacing={1}
+  alignItems="center"
+  sx={{
+    minWidth: 0,
+  }}
+>
+
+  {/* MOBILE BACK BUTTON */}
+
+  <IconButton
+    onClick={handleMobileBack}
+    sx={{
+      display: {
+        xs: "flex",
+        sm: "none",
+      },
+
+      color: "white",
+
+      width: 38,
+      height: 38,
+    }}
+  >
+    <ArrowBack />
+  </IconButton>
+
+
+  <Typography
+    noWrap
+    sx={{
+      fontWeight: 700,
+
+      fontSize: {
+        xs: "1rem",
+        sm: "1.1rem",
+        md: "1.2rem",
+      },
+
+      color: "white",
+
+      overflow: "hidden",
+
+      textOverflow: "ellipsis",
+    }}
+  >
+    {chatDetails?.data?.chat?.name}
+  </Typography>
+
+
+</Stack>
 
         <Tooltip title="Profile">
           <IconButton
